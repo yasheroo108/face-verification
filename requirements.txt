@@ -1,6 +1,6 @@
 streamlit
-deepface==0.0.79
-opencv-python-headless==4.8.0.74
-tensorflow==2.12.0
-numpy==1.23.5
+deepface==0.0.93
+opencv-python==4.12.0.88
+tensorflow==2.19.0
+numpy==2.1.3
 Pillow
