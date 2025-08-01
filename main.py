@@ -2,6 +2,7 @@ import streamlit as st
 from deepface import DeepFace
 import numpy as np
 import cv2
+import json
 
 st.markdown("""
     <style>   
@@ -57,7 +58,7 @@ with st.spinner("Verifying..."):
                 img1 = to_opencv_image(person_one)
                 img2 = to_opencv_image(person_two)
                 result = DeepFace.verify(img1_path = img1, img2_path = img2)
-                result = str(result)
+                result = json.dumps(result, indent=2)
 
                 if '"verified": true' in result:
                     st.info("Both faces belong to the same person")
