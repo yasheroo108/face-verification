@@ -57,6 +57,7 @@ with st.spinner("Verifying..."):
                 img1 = to_opencv_image(person_one)
                 img2 = to_opencv_image(person_two)
                 result = DeepFace.verify(img1_path = img1, img2_path = img2)
+                result = str(result)
 
                 if '"verified": true' in result:
                     st.info("Both faces belong to the same person")
