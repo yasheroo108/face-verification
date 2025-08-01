@@ -3,3 +3,4 @@ deepface
 json
 numpy
 opencv-python-headless
+tensorflow>=2.5.0
