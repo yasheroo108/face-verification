@@ -1,6 +1,6 @@
 streamlit
 deepface
-json
-numpy
 opencv-python-headless
+numpy
+Pillow
 tensorflow>=2.5.0
