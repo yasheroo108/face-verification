@@ -4,6 +4,8 @@ import numpy as np
 import cv2
 import json
 from PIL import Image, ImageOps
+from io import BytesIO
+
 
 
 st.markdown("""
@@ -35,17 +37,62 @@ st.markdown("""
 </p>
 """, unsafe_allow_html=True)
 
+
+def to_opencv_image(file):
+    file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
+    return cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
     
-person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp", "heif", "hiec"])
+person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp"])
 
 if person_one is not None:
     st.image(person_one)
 
-person_two = st.file_uploader("Upload an image of the second person", type=["png", "jpg", "jpeg", "webp", "heif", "hiec"])
+    def convert_jpeg_to_png_in_memory(person_one):
+        # Open image
+        img = Image.open(person_one)
+
+        # Check if input is JPEG format (either from file extension or PIL format)
+        is_jpeg = (
+            person_one.name.lower().endswith((".jpg", ".jpeg")) or
+            (img.format and img.format.lower() == "jpeg")
+        )
+
+        if is_jpeg:
+            # Convert JPEG to PNG in memory
+            buf = BytesIO()
+            img = img.convert("RGB")  # ensure RGB mode
+            img.save(buf, format="PNG")
+            buf.seek(0)
+            img = Image.open(buf)
+            person_one = img
+
+        return person_one
+
+person_two = st.file_uploader("Upload an image of the second person", type=["png", "jpg", "jpeg", "webp"])
 
 if person_two is not None:
     st.image(person_two)
 
+    def convert_jpeg_to_png_in_memory(person_two):
+        # Open image
+        img = Image.open(person_two)
+
+        # Check if input is JPEG format (either from file extension or PIL format)
+        is_jpeg = (
+            person_two.name.lower().endswith((".jpg", ".jpeg")) or
+            (img.format and img.format.lower() == "jpeg")
+        )
+
+        if is_jpeg:
+            # Convert JPEG to PNG in memory
+            buf = BytesIO()
+            img = img.convert("RGB")  # ensure RGB mode
+            img.save(buf, format="PNG")
+            buf.seek(0)
+            img = Image.open(buf)
+            person_two = img
+
+        return person_two
 
 verification_btn = st.button("Verify")
 
