@@ -3,6 +3,8 @@ from deepface import DeepFace
 import numpy as np
 import cv2
 import json
+from PIL import Image, ImageOps
+
 
 st.markdown("""
     <style>   
@@ -47,6 +49,17 @@ person_two = st.file_uploader("Upload an image of the second person", type=["png
 
 if person_two is not None:
     st.image(person_two)
+
+def to_opencv_image(file):
+    # Open and apply EXIF orientation (if exists)
+    image = Image.open(file)
+    image = ImageOps.exif_transpose(image)
+
+    # Convert to RGB (ensures no HEIC, CMYK, or alpha issues)
+    image = image.convert("RGB")
+
+    # Convert to NumPy array for OpenCV
+    return np.array(image)
 
 verification_btn = st.button("Verify")
 
