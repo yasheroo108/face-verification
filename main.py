@@ -35,14 +35,13 @@ st.markdown("""
 </p>
 """, unsafe_allow_html=True)
 
-
     
-person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp"])
+person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp", "heic"])
 
 if person_one is not None:
     st.image(person_one)
 
-person_two = st.file_uploader("Upload an image of the second person", type=["png", "jpg", "jpeg", "webp"])
+person_two = st.file_uploader("Upload an image of the second person", type=["png", "jpg", "jpeg", "webp", "heic"])
 
 if person_two is not None:
     st.image(person_two)
@@ -82,5 +81,3 @@ with st.spinner("Verifying..."):
         else:
             st.warning("Unknown error occurred, please try with different images or later.")
             st.write(error_message)
-
-
