@@ -36,12 +36,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
     
-person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp", "heic"])
+person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp", "heif", "hiec"])
 
 if person_one is not None:
     st.image(person_one)
 
-person_two = st.file_uploader("Upload an image of the second person", type=["png", "jpg", "jpeg", "webp", "heic"])
+person_two = st.file_uploader("Upload an image of the second person", type=["png", "jpg", "jpeg", "webp", "heif", "hiec"])
 
 if person_two is not None:
     st.image(person_two)
