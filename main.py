@@ -37,8 +37,18 @@ st.markdown("""
 
 
 def to_opencv_image(uploaded_file):
-    image = Image.open(uploaded_file).convert("RGB") 
-    return cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    try:
+        st.write("MIME type:", uploaded_file.type)
+        st.write("File name:", uploaded_file.name)
+
+        image = Image.open(uploaded_file)
+        st.write("Format as detected by PIL:", image.format)
+        image = image.convert("RGB")
+        return cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+    except Exception as e:
+        st.error("Failed to read image. Try another format.")
+        st.write(e)
+        return None
     
 person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp"])
 
@@ -85,3 +95,4 @@ with st.spinner("Verifying..."):
         else:
             st.warning("Unknown error occurred, please try with different images or later.")
             st.write(error_message)
+
