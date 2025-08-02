@@ -36,9 +36,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-def to_opencv_image(file):
-    file_bytes = np.asarray(bytearray(file.read()), dtype=np.uint8)
-    return cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+def to_opencv_image(uploaded_file):
+    image = Image.open(uploaded_file).convert("RGB") 
+    return cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
     
 person_one = st.file_uploader("Upload an image of the first person", type=["png", "jpg", "jpeg", "webp"])
 
@@ -50,16 +50,6 @@ person_two = st.file_uploader("Upload an image of the second person", type=["png
 if person_two is not None:
     st.image(person_two)
 
-def to_opencv_image(file):
-    # Open and apply EXIF orientation (if exists)
-    image = Image.open(file)
-    image = ImageOps.exif_transpose(image)
-
-    # Convert to RGB (ensures no HEIC, CMYK, or alpha issues)
-    image = image.convert("RGB")
-
-    # Convert to NumPy array for OpenCV
-    return np.array(image)
 
 verification_btn = st.button("Verify")
 
